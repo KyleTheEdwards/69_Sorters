@@ -9,28 +9,43 @@ public class InsertionSorter extends Sorter {
      */
 
   private int sortedElements;
-  private int currentElement;
+  private String currentElement;
   private int currentElementIndex;
-  private AraryList<String> toSort;
-  private int toSortSize;
+  private int sortSize;
 
   public InsertionSorter(  ArrayList< String> usersData) {
       // your code here, if necessary
-      toSort = usersData;
-      toSortSize = toSort.size() - 1; //So that you can't
-      sortedElements = 0;
+      super(usersData);
+      sortSize = elements.size(); //So that you don't need to access the size every time
   }
 
   /**
     sort the user's data, implementing insertion sort
    */
   public void mySort() {
-    if(sortedElements != toSortSize){
+    if(sortedElements != sortSize){
+
       currentElementIndex = sortedElements;
-      currentElement = toSort.get(currentElementIndex);;
-      for(int currentCompare = currentElementIndex - 1; currentCompare >= 0; currentCompare++){
-        if(toSort
+      currentElement = elements.get(currentElementIndex);
+
+      String temp;
+
+      while(currentElementIndex != 0 && elements.get(currentElementIndex).compareTo(elements.get(currentElementIndex - 1)) < 0 ){
+        //This is just a swap function
+        temp = elements.get(currentElementIndex);
+        elements.set(currentElementIndex, elements.get(currentElementIndex-1));
+        elements.set(currentElementIndex-1, temp);
+
+        //Keep setting the current element index back
+        currentElementIndex--;
       }
+
+      sortedElements++;
+
+      System.out.println(elements + "\tSize of sorted: " + sortedElements);
+
+      //Tail recursion, since we're accessing the same thing
+      mySort();
     }
   }
 }
